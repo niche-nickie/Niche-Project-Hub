@@ -46,51 +46,83 @@ const CAT_COLOR = {
   show: '#D98A8A',
 };
 
-// ---------- Build ----------
-const BUILD = [
+// ---------- Loose Items Checklist ----------
+// Only items we need to prepare / procure / track. Wall structure (built-in) is excluded.
+const CHECKLIST = [
   {
-    group: 'Custom Structure',
+    cat: 'Electronics',
     items: [
-      { name: 'Formica wall panels', detail: 'Blue / Maple / White / Raw Wood — 60+ pieces' },
-      { name: 'Door & DS panels', detail: '12 pieces' },
-      { name: 'Tempered glass', detail: '18 panels (6 + 6 + 1 + 2 + 3)' },
-      { name: 'Custom wooden logo', detail: 'Acrylic support, caster wheels' },
-      { name: 'LED wall frame', detail: 'Custom angle panels' },
-      { name: 'Custom ceilings', detail: '8 units — white Formica + LED strips' },
-      { name: 'Bar counters & counters', detail: '15 units — Formica + LED strips' },
-      { name: 'Custom displays', detail: '2 units — 55" touchscreen enclosure' },
-      { name: 'Stage re-skin', detail: '21× 4\'×10\' + 6× 4\'×8\', LED diffuser channel' },
-      { name: 'Curved / slatted panels + cafe header', detail: 'Rubber LED channel' },
+      { name: '65" TV', qty: '×2' },
+      { name: '50" TV', qty: '×2' },
+      { name: '55" Touchscreen', qty: '×1' },
+      { name: 'LED Wall Header panels (500×500)', qty: '×52' },
+      { name: 'LED Wall panels (500×500)', qty: '×30' },
+      { name: 'Air Conditioner', qty: '×2' },
     ],
   },
   {
-    group: 'Graphics',
+    cat: 'Lighting',
     items: [
-      { name: 'Fabric graphics', detail: '10 pieces — banner / wall graphic (4/0 print)' },
-      { name: 'PVC panels', detail: '7 pieces — 3mm, CNC / V cut' },
-      { name: 'ULTRAFOAM logos', detail: '13 pieces — 1" / 1/2", CNC' },
-    ],
-  },
-];
-
-// ---------- Purchase ----------
-const PURCHASE = [
-  {
-    group: 'AMG Purchase',
-    items: [
-      { name: 'Furniture / Electronics / Accessory', detail: '65" TV ×2, 50" TV ×2, 55" touchscreen ×1, fridges ×4, meeting chairs ×18, bar stools ×12, AC ×2, neon sign, LED lighting, sliding doors ×2, moss, truss ×2, rear CAE lightbox' },
-      { name: 'LED Screen', detail: 'LED Wall Header 52 panels + LED Wall 30 panels (500×500mm)' },
-      { name: 'Flooring Rental', detail: '2800 sf (light gray carpet)' },
+      { name: 'Hanging Light', qty: '×2' },
+      { name: 'Metal LED Diffuser', qty: '×8' },
+      { name: 'Standard Recess Light', qty: '×32' },
+      { name: 'Side-Facing LED Diffuser', qty: '×2' },
     ],
   },
   {
-    group: 'Furniture — designer8 (paid by client)',
+    cat: 'Appliances',
     items: [
-      { name: 'Media Lounge', detail: '5 pieces (2 + 2 + 1)' },
-      { name: 'Main Lounge', detail: 'Tables + chairs + pillows (16 units) + Poe sectional (cream) + Dune coffee table' },
-      { name: 'High Tables / High Chairs', detail: '12 tables + 3 chairs (Marlo barstool) + 12 high chairs' },
-      { name: 'Meeting Room', detail: '16 + 16 (Option 1 Modern Minimal / Option 2 Comforting Earthy)' },
-      { name: 'Backoffice', detail: 'IBM table ×2 + Chair ×4' },
+      { name: 'Glass Mini Fridge', qty: '×2' },
+      { name: 'Mini Fridge', qty: '×1' },
+      { name: 'Refrigerator', qty: '×1' },
+      { name: 'Sink', qty: '×1' },
+    ],
+  },
+  {
+    cat: 'Furniture — AMG',
+    items: [
+      { name: 'Meeting Chair', qty: '×18' },
+      { name: 'Black Bar Stool', qty: '×12' },
+    ],
+  },
+  {
+    cat: 'Furniture — designer8 (paid by client)',
+    items: [
+      { name: 'Media Lounge furniture', qty: '×5' },
+      { name: 'Main Lounge tables + chairs + pillows', qty: '×16' },
+      { name: 'Poe sectional (cream)', qty: '×1' },
+      { name: 'Dune coffee table', qty: '×1' },
+      { name: 'High tables', qty: '×12' },
+      { name: 'Marlo barstool', qty: '×3' },
+      { name: 'High chairs', qty: '×12' },
+      { name: 'Meeting Room chairs', qty: '×32' },
+      { name: 'Backoffice IBM table', qty: '×2' },
+      { name: 'Backoffice chair', qty: '×4' },
+    ],
+  },
+  {
+    cat: 'Accessories',
+    items: [
+      { name: 'Neon Sign', qty: '×1' },
+      { name: 'Moss', qty: '×2' },
+      { name: 'Truss', qty: '×2' },
+      { name: 'Sliding Glass Door', qty: '×2' },
+      { name: 'Rear CAE Hanging Lightbox', qty: '×1' },
+      { name: 'Rigging Point', qty: '×1' },
+    ],
+  },
+  {
+    cat: 'Graphics',
+    items: [
+      { name: 'Fabric graphics (banner / wall)', qty: '×10' },
+      { name: 'PVC panels (3mm)', qty: '×7' },
+      { name: 'ULTRAFOAM logos', qty: '×13' },
+    ],
+  },
+  {
+    cat: 'Flooring',
+    items: [
+      { name: 'Carpet (light gray)', qty: '2800 sf' },
     ],
   },
 ];
@@ -147,13 +179,25 @@ const QUOTE = {
 
 // ---------- Notes ----------
 const NOTES = [
-  'Agency provides design. AMG scope: production, graphics, logistics, and I&amp;D only.',
+  'Agency provides design. AMG scope: production, graphics, logistics, and I&D only.',
   'Freeman discount orders due Sep 16 — electrical, rigging, labor, carpet before this date.',
   'Graphics final files due Sep 23 (3 weeks before move-in).',
   'Direct to show site: freight ships Oct 10, arrives Oct 14. No advance warehouse.',
   'Blue target zone = earliest move-in (Oct 14). 6 full days of setup before show opens Oct 20.',
   'Furniture ordered via designer8, paid directly by client (not in AMG quote).',
 ];
+
+// ---------- Checklist state (localStorage) ----------
+const CHECK_STORE = 'cae-checklist';
+
+function getChecked() {
+  try { return JSON.parse(localStorage.getItem(CHECK_STORE) || '{}'); }
+  catch (e) { return {}; }
+}
+
+function setChecked(state) {
+  localStorage.setItem(CHECK_STORE, JSON.stringify(state));
+}
 
 // ---------- Render ----------
 function fmtDate(iso) {
@@ -211,21 +255,53 @@ function renderTimeline() {
   }).join('');
 }
 
-function renderGroup(data, containerId) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = data.map(g => `
+function updateCheckProgress() {
+  const state = getChecked();
+  let total = 0, done = 0;
+  CHECKLIST.forEach((g, gi) => {
+    g.items.forEach((it, ii) => {
+      total++;
+      if (state[`${gi}-${ii}`]) done++;
+    });
+  });
+  const prog = document.getElementById('check-progress');
+  if (prog) prog.textContent = `${done} / ${total}`;
+}
+
+function renderChecklist() {
+  const el = document.getElementById('checklist');
+  const state = getChecked();
+  el.innerHTML = CHECKLIST.map((g, gi) => `
     <div class="group-card">
       <div class="group-head">
-        <span class="group-title">${g.group}</span>
+        <span class="group-title">${g.cat}</span>
+        <span class="group-count">${g.items.length}</span>
       </div>
-      ${g.items.map(it => `
-        <div class="purchase-row">
-          <div class="purchase-main">
-            <div class="purchase-name">${it.name}</div>
-            <div class="purchase-detail">${it.detail}</div>
-          </div>
-        </div>`).join('')}
+      ${g.items.map((it, ii) => {
+        const id = `${gi}-${ii}`;
+        const on = !!state[id];
+        return `
+        <label class="check-row ${on ? 'on' : ''}">
+          <input type="checkbox" data-id="${id}" ${on ? 'checked' : ''}>
+          <span class="check-box"></span>
+          <span class="check-name">${it.name}</span>
+          <span class="check-qty">${it.qty}</span>
+        </label>`;
+      }).join('')}
     </div>`).join('');
+
+  el.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const s = getChecked();
+      if (cb.checked) s[cb.dataset.id] = true;
+      else delete s[cb.dataset.id];
+      setChecked(s);
+      cb.closest('.check-row').classList.toggle('on', cb.checked);
+      updateCheckProgress();
+    });
+  });
+
+  updateCheckProgress();
 }
 
 function renderGallery(items, containerId) {
@@ -260,6 +336,5 @@ renderTimeline();
 renderGallery(RENDERS, 'renders');
 renderGallery(DRAWINGS, 'drawings');
 renderQuote();
-renderGroup(BUILD, 'build');
-renderGroup(PURCHASE, 'purchase');
+renderChecklist();
 renderNotes();
