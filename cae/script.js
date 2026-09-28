@@ -49,9 +49,25 @@ const CAT_COLOR = {
 // ---------- Design elements ----------
 const ELEMENTS = [
   { icon: '🖥️', name: 'LED Main Visual Wall', desc: 'Main visual LED wall' },
-  { icon: '🎮', name: 'Flightscape Interactive Area', desc: 'Interactive flightscape zone' },
+  { icon: '🎮', name: 'Flightscope Interactive Area', desc: 'Flight simulation interactive zone' },
+  { icon: '☕', name: 'Cafe & Lounge', desc: 'Coffee bar & lounge seating' },
   { icon: '🪑', name: '2 Meeting Rooms', desc: 'Private meeting rooms' },
   { icon: '🌿', name: 'Living Wall', desc: 'Green living wall' },
+];
+
+// ---------- Renders (client 3D visuals) ----------
+const RENDERS = [
+  { src: 'assets/cae-render-1.jpg', caption: 'Main view — booth overview' },
+  { src: 'assets/cae-render-2.jpg', caption: 'Flightscope & Cafe area' },
+  { src: 'assets/cae-render-3.jpg', caption: 'Isometric view — show floor' },
+];
+
+// ---------- Drawings (orthographic views) ----------
+const DRAWINGS = [
+  { src: 'assets/cae-dwg-1.jpg', caption: 'Top view — with ceiling' },
+  { src: 'assets/cae-dwg-2.jpg', caption: 'Top view — without ceiling' },
+  { src: 'assets/cae-dwg-3.jpg', caption: 'Front view / Back view' },
+  { src: 'assets/cae-dwg-4.jpg', caption: 'Left view / Right view' },
 ];
 
 // ---------- Notes ----------
@@ -83,7 +99,6 @@ function renderTimeline() {
   el.innerHTML = TIMELINE.map(t => {
     const d = new Date(t.date + 'T00:00:00');
     const done = d < TODAY;
-    const isToday = d.getTime() === TODAY.getTime();
     return `
     <div class="tl-row ${done ? 'done' : ''}">
       <div class="tl-date">${fmtDate(t.date)}</div>
@@ -106,6 +121,28 @@ function renderElements() {
     </div>`).join('');
 }
 
+function renderGallery(items, containerId) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = items.map(it => `
+    <figure class="gallery-item" onclick="openLightbox('${it.src}', '${it.caption}')">
+      <img src="${it.src}" alt="${it.caption}" loading="lazy">
+      <figcaption>${it.caption}</figcaption>
+    </figure>`).join('');
+}
+
+function openLightbox(src, caption) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  const cap = document.getElementById('lightbox-caption');
+  img.src = src;
+  cap.textContent = caption;
+  lb.style.display = 'flex';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+}
+
 function renderNotes() {
   const el = document.getElementById('notes');
   el.innerHTML = NOTES.map(n => `<div class="note-item">${n}</div>`).join('');
@@ -114,4 +151,6 @@ function renderNotes() {
 renderOverview();
 renderTimeline();
 renderElements();
+renderGallery(RENDERS, 'renders');
+renderGallery(DRAWINGS, 'drawings');
 renderNotes();

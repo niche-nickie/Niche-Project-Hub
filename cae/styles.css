@@ -253,3 +253,65 @@ body {
 }
 
 .footer-dot { color: var(--brass); }
+
+/* Gallery (renders / drawings) */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.gallery-item {
+  margin: 0;
+  cursor: zoom-in;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.gallery-item:hover { border-color: var(--brass); transform: translateY(-2px); }
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.gallery-item figcaption {
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+/* Lightbox */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.92);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: zoom-out;
+  padding: 24px;
+}
+
+#lightbox-img {
+  max-width: 95vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+#lightbox-caption {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--warm-white);
+  letter-spacing: 0.02em;
+}

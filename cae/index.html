@@ -39,6 +39,18 @@
       <div class="element-grid" id="elements"></div>
     </section>
 
+    <!-- Renders -->
+    <section class="section-block">
+      <h2 class="section-title">Renders</h2>
+      <div class="gallery" id="renders"></div>
+    </section>
+
+    <!-- Drawings -->
+    <section class="section-block">
+      <h2 class="section-title">Drawings</h2>
+      <div class="gallery" id="drawings"></div>
+    </section>
+
     <!-- Notes -->
     <section class="section-block">
       <h2 class="section-title">Scope &amp; Notes</h2>
@@ -51,6 +63,12 @@
       <span>Client: CAE</span>
     </footer>
   </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+    <div id="lightbox-caption"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
