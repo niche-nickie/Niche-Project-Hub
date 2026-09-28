@@ -334,6 +334,100 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Build / Purchase groups */
+.group-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.group-card:last-child { margin-bottom: 0; }
+
+.group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.group-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ivory);
+  letter-spacing: 0.02em;
+}
+
+.group-amt {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--brass-soft);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.group-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.group-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.group-list li {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.group-list li::marker { color: var(--brass); }
+
+/* Purchase rows */
+.purchase-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(176, 154, 106, 0.08);
+}
+
+.purchase-row:last-child { border-bottom: none; }
+
+.purchase-main { flex: 1; }
+
+.purchase-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--warm-white);
+}
+
+.purchase-detail {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-dim);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+.purchase-amt {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brass-soft);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 /* Gallery (renders / drawings) */
 .gallery {
   display: grid;
