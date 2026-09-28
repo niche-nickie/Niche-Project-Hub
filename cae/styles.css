@@ -481,6 +481,86 @@ body {
   white-space: nowrap;
 }
 
+/* Edit Mode */
+.check-head-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.edit-toggle-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--brass);
+  background: transparent;
+  border: 1px solid rgba(176, 154, 106, 0.5);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.edit-toggle-btn:hover { background: rgba(176, 154, 106, 0.12); }
+
+.edit-toggle-btn.editing-active {
+  background: var(--brass);
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.edit-x {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: color 0.15s, background 0.15s;
+}
+
+.edit-x:hover { color: #d98a8a; background: rgba(217, 138, 138, 0.12); }
+
+.edit-add {
+  display: block;
+  margin: 8px 0 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--brass);
+  background: transparent;
+  border: 1px dashed rgba(176, 154, 106, 0.5);
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.edit-add:hover { background: rgba(176, 154, 106, 0.08); }
+
+.edit-add-cat { margin-top: 14px; text-align: center; }
+
+[contenteditable] {
+  outline: none;
+  border-bottom: 1px dashed var(--brass);
+  cursor: text;
+  min-width: 20px;
+}
+
+[contenteditable]:focus {
+  border-bottom-color: var(--brass);
+  background: rgba(176, 154, 106, 0.08);
+}
+
+body.editing .check-row { cursor: default; }
+
 /* Gallery (renders / drawings) */
 .gallery {
   display: grid;
