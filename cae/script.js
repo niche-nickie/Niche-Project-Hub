@@ -50,25 +50,25 @@ const CAT_COLOR = {
 const BUILD = [
   {
     group: 'Custom Structure',
-    amount: 192214.70,
-    note: 'Fabricated in AMG shop — Formica panels, tempered glass, wood structure',
     items: [
-      '50+ Formica panels (Blue / Maple / White / Raw Wood)',
-      '18 tempered glass panels',
-      'Custom wooden logo, LED wall frame',
-      '8 custom ceilings, 4 bar counters',
-      '2 custom displays, 11 counters',
-      'Stage re-skin, curved panels, slatted panels, cafe header',
+      { name: 'Formica wall panels', detail: 'Blue / Maple / White / Raw Wood — 60+ pieces' },
+      { name: 'Door & DS panels', detail: '12 pieces' },
+      { name: 'Tempered glass', detail: '18 panels (6 + 6 + 1 + 2 + 3)' },
+      { name: 'Custom wooden logo', detail: 'Acrylic support, caster wheels' },
+      { name: 'LED wall frame', detail: 'Custom angle panels' },
+      { name: 'Custom ceilings', detail: '8 units — white Formica + LED strips' },
+      { name: 'Bar counters & counters', detail: '15 units — Formica + LED strips' },
+      { name: 'Custom displays', detail: '2 units — 55" touchscreen enclosure' },
+      { name: 'Stage re-skin', detail: '21× 4\'×10\' + 6× 4\'×8\', LED diffuser channel' },
+      { name: 'Curved / slatted panels + cafe header', detail: 'Rubber LED channel' },
     ],
   },
   {
     group: 'Graphics',
-    amount: 16031.05,
-    note: 'Print output — Fabric / PVC / ULTRAFOAM',
     items: [
-      '10 FABRIC graphics (banner / wall graphic)',
-      '7 PVC 3mm panels (CNC cut)',
-      '13 ULTRAFOAM logos (1" / 1/2")',
+      { name: 'Fabric graphics', detail: '10 pieces — banner / wall graphic (4/0 print)' },
+      { name: 'PVC panels', detail: '7 pieces — 3mm, CNC / V cut' },
+      { name: 'ULTRAFOAM logos', detail: '13 pieces — 1" / 1/2", CNC' },
     ],
   },
 ];
@@ -76,21 +76,21 @@ const BUILD = [
 // ---------- Purchase ----------
 const PURCHASE = [
   {
-    group: 'AMG Purchase (in $345,000 quote)',
+    group: 'AMG Purchase',
     items: [
-      { name: 'Furniture / Electronics / Accessory', detail: '65" TV ×2, 50" TV ×2, 55" touchscreen ×1, fridges ×4, meeting chairs ×18, bar stools ×12, AC ×2, neon sign, LED lighting, sliding doors ×2, moss, truss ×2, rear CAE lightbox', amount: 28619.00 },
-      { name: 'LED Screen', detail: 'LED Wall Header 52 panels + LED Wall 30 panels (500×500mm)', amount: 18200.00 },
-      { name: 'Flooring Rental', detail: '2800 sf @ $4.95/sf (light gray carpet)', amount: 13860.00 },
+      { name: 'Furniture / Electronics / Accessory', detail: '65" TV ×2, 50" TV ×2, 55" touchscreen ×1, fridges ×4, meeting chairs ×18, bar stools ×12, AC ×2, neon sign, LED lighting, sliding doors ×2, moss, truss ×2, rear CAE lightbox' },
+      { name: 'LED Screen', detail: 'LED Wall Header 52 panels + LED Wall 30 panels (500×500mm)' },
+      { name: 'Flooring Rental', detail: '2800 sf (light gray carpet)' },
     ],
   },
   {
     group: 'Furniture — designer8 (paid by client)',
     items: [
-      { name: 'Media Lounge', detail: '5 pieces (2 + 2 + 1)', amount: null },
-      { name: 'Main Lounge', detail: 'Tables + chairs + pillows (16 units) + Poe sectional (cream) + Dune coffee table', amount: null },
-      { name: 'High Tables / High Chairs', detail: '12 tables + 3 chairs (Marlo barstool) + 12 high chairs', amount: null },
-      { name: 'Meeting Room', detail: '16 + 16 (Option 1 Modern Minimal / Option 2 Comforting Earthy)', amount: null },
-      { name: 'Backoffice', detail: 'IBM table ×2 + Chair ×4', amount: null },
+      { name: 'Media Lounge', detail: '5 pieces (2 + 2 + 1)' },
+      { name: 'Main Lounge', detail: 'Tables + chairs + pillows (16 units) + Poe sectional (cream) + Dune coffee table' },
+      { name: 'High Tables / High Chairs', detail: '12 tables + 3 chairs (Marlo barstool) + 12 high chairs' },
+      { name: 'Meeting Room', detail: '16 + 16 (Option 1 Modern Minimal / Option 2 Comforting Earthy)' },
+      { name: 'Backoffice', detail: 'IBM table ×2 + Chair ×4' },
     ],
   },
 ];
@@ -211,24 +211,9 @@ function renderTimeline() {
   }).join('');
 }
 
-function renderBuild() {
-  const el = document.getElementById('build');
-  el.innerHTML = BUILD.map(b => `
-    <div class="group-card">
-      <div class="group-head">
-        <span class="group-title">${b.group}</span>
-        ${b.amount ? `<span class="group-amt">${fmtMoney(b.amount)}</span>` : ''}
-      </div>
-      <div class="group-note">${b.note}</div>
-      <ul class="group-list">
-        ${b.items.map(it => `<li>${it}</li>`).join('')}
-      </ul>
-    </div>`).join('');
-}
-
-function renderPurchase() {
-  const el = document.getElementById('purchase');
-  el.innerHTML = PURCHASE.map(g => `
+function renderGroup(data, containerId) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = data.map(g => `
     <div class="group-card">
       <div class="group-head">
         <span class="group-title">${g.group}</span>
@@ -239,7 +224,6 @@ function renderPurchase() {
             <div class="purchase-name">${it.name}</div>
             <div class="purchase-detail">${it.detail}</div>
           </div>
-          ${it.amount != null ? `<span class="purchase-amt">${fmtMoney(it.amount)}</span>` : ''}
         </div>`).join('')}
     </div>`).join('');
 }
@@ -273,9 +257,9 @@ function renderNotes() {
 
 renderOverview();
 renderTimeline();
-renderBuild();
-renderPurchase();
-renderQuote();
 renderGallery(RENDERS, 'renders');
 renderGallery(DRAWINGS, 'drawings');
+renderQuote();
+renderGroup(BUILD, 'build');
+renderGroup(PURCHASE, 'purchase');
 renderNotes();
