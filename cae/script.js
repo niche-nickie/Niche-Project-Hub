@@ -46,50 +46,50 @@ const CAT_COLOR = {
   show: '#D98A8A',
 };
 
-// ---------- Build（要製作） ----------
+// ---------- Build ----------
 const BUILD = [
   {
     group: 'Custom Structure',
     amount: 192214.70,
-    note: 'AMG 工廠製作 — Formica 面板、強化玻璃、木質結構',
+    note: 'Fabricated in AMG shop — Formica panels, tempered glass, wood structure',
     items: [
-      'Formica 面板（Blue / Maple / White / Raw Wood）×50+ 片',
-      '強化玻璃（Tempered Glass）18 片',
-      '客製木質 Logo、LED 牆框架',
-      '客製天花板（Ceiling）8 組、吧台（Bar Counter）4 座',
-      '客製展示櫃（Display）×2、Counter ×11',
-      'Stage Re-Skin、Curved Panel、Slatted Panel、Cafe Header',
+      '50+ Formica panels (Blue / Maple / White / Raw Wood)',
+      '18 tempered glass panels',
+      'Custom wooden logo, LED wall frame',
+      '8 custom ceilings, 4 bar counters',
+      '2 custom displays, 11 counters',
+      'Stage re-skin, curved panels, slatted panels, cafe header',
     ],
   },
   {
     group: 'Graphics',
     amount: 16031.05,
-    note: '圖形輸出 — 布料 / PVC / ULTRAFOAM',
+    note: 'Print output — Fabric / PVC / ULTRAFOAM',
     items: [
-      'FABRIC 布料圖形（banner / wall graphic）×10',
-      'PVC 3mm 面板（CNC 切割）×7',
-      'ULTRAFOAM logo（1" / 1/2"）×13',
+      '10 FABRIC graphics (banner / wall graphic)',
+      '7 PVC 3mm panels (CNC cut)',
+      '13 ULTRAFOAM logos (1" / 1/2")',
     ],
   },
 ];
 
-// ---------- Purchase（要購買 / 租賃） ----------
+// ---------- Purchase ----------
 const PURCHASE = [
   {
-    group: 'AMG 採購（含於報價 $345,000）',
+    group: 'AMG Purchase (in $345,000 quote)',
     items: [
-      { name: 'Furniture / Electronics / Accessory', detail: '65" TV ×2、50" TV ×2、55" 觸控螢幕 ×1、冰箱 ×4、會議椅 ×18、吧台椅 ×12、冷氣 ×2、霓虹燈、LED 燈具、滑門 ×2、Moss、Truss ×2、Rear CAE 燈箱', amount: 28619.00 },
-      { name: 'LED Screen', detail: 'LED Wall Header 52 panels + LED Wall 30 panels（500×500mm）', amount: 18200.00 },
-      { name: 'Flooring Rental', detail: '2800 sf @ $4.95/sf（淺灰地毯）', amount: 13860.00 },
+      { name: 'Furniture / Electronics / Accessory', detail: '65" TV ×2, 50" TV ×2, 55" touchscreen ×1, fridges ×4, meeting chairs ×18, bar stools ×12, AC ×2, neon sign, LED lighting, sliding doors ×2, moss, truss ×2, rear CAE lightbox', amount: 28619.00 },
+      { name: 'LED Screen', detail: 'LED Wall Header 52 panels + LED Wall 30 panels (500×500mm)', amount: 18200.00 },
+      { name: 'Flooring Rental', detail: '2800 sf @ $4.95/sf (light gray carpet)', amount: 13860.00 },
     ],
   },
   {
-    group: '家具 — designer8 訂購（客人自付）',
+    group: 'Furniture — designer8 (paid by client)',
     items: [
-      { name: 'Media Lounge', detail: '5 件（2 + 2 + 1）', amount: null },
-      { name: 'Main Lounge', detail: '桌椅 + 抱枕 16 units + Poe sectional 奶油色 + Dune coffee table', amount: null },
-      { name: 'High Tables / High Chairs', detail: '12 桌 + 3 椅（Marlo barstool）+ 12 高椅', amount: null },
-      { name: 'Meeting Room', detail: '16 + 16（Option 1 Modern Minimal / Option 2 Comforting Earthy）', amount: null },
+      { name: 'Media Lounge', detail: '5 pieces (2 + 2 + 1)', amount: null },
+      { name: 'Main Lounge', detail: 'Tables + chairs + pillows (16 units) + Poe sectional (cream) + Dune coffee table', amount: null },
+      { name: 'High Tables / High Chairs', detail: '12 tables + 3 chairs (Marlo barstool) + 12 high chairs', amount: null },
+      { name: 'Meeting Room', detail: '16 + 16 (Option 1 Modern Minimal / Option 2 Comforting Earthy)', amount: null },
       { name: 'Backoffice', detail: 'IBM table ×2 + Chair ×4', amount: null },
     ],
   },
