@@ -46,20 +46,28 @@ const CAT_COLOR = {
   show: '#D98A8A',
 };
 
-// ---------- Design elements ----------
-const ELEMENTS = [
-  { icon: '🖥️', name: 'LED Main Visual Wall', desc: 'Main visual LED wall' },
-  { icon: '🎮', name: 'Flightscope Interactive Area', desc: 'Flight simulation interactive zone' },
-  { icon: '☕', name: 'Cafe & Lounge', desc: 'Coffee bar & lounge seating' },
-  { icon: '🪑', name: '2 Meeting Rooms', desc: 'Private meeting rooms' },
-  { icon: '🌿', name: 'Living Wall', desc: 'Green living wall' },
-];
-
-// ---------- Renders (client 3D visuals) ----------
+// ---------- Renders (client 3D visuals, 20 views) ----------
 const RENDERS = [
-  { src: 'assets/cae-render-1.jpg', caption: 'Main view — booth overview' },
-  { src: 'assets/cae-render-2.jpg', caption: 'Flightscope & Cafe area' },
-  { src: 'assets/cae-render-3.jpg', caption: 'Isometric view — show floor' },
+  { src: 'assets/cae-render-01.jpg', caption: 'Main view — overview' },
+  { src: 'assets/cae-render-02.jpg', caption: 'Flightscope & Cafe' },
+  { src: 'assets/cae-render-03.jpg', caption: 'Entrance & reception' },
+  { src: 'assets/cae-render-04.jpg', caption: 'Front exterior' },
+  { src: 'assets/cae-render-05.jpg', caption: 'Main screen — Defense & Security' },
+  { src: 'assets/cae-render-06.jpg', caption: 'Aerial — lounge & living wall' },
+  { src: 'assets/cae-render-07.jpg', caption: 'Render 07' },
+  { src: 'assets/cae-render-08.jpg', caption: 'Render 08' },
+  { src: 'assets/cae-render-09.jpg', caption: 'Render 09' },
+  { src: 'assets/cae-render-10.jpg', caption: 'Render 10' },
+  { src: 'assets/cae-render-11.jpg', caption: 'Render 11' },
+  { src: 'assets/cae-render-12.jpg', caption: 'Cafe & glass meeting room' },
+  { src: 'assets/cae-render-13.jpg', caption: 'Render 13' },
+  { src: 'assets/cae-render-14.jpg', caption: 'Render 14' },
+  { src: 'assets/cae-render-15.jpg', caption: 'Render 15' },
+  { src: 'assets/cae-render-16.jpg', caption: 'Render 16' },
+  { src: 'assets/cae-render-17.jpg', caption: 'Render 17' },
+  { src: 'assets/cae-render-18.jpg', caption: 'Render 18' },
+  { src: 'assets/cae-render-19.jpg', caption: 'Meeting room interior' },
+  { src: 'assets/cae-render-20.jpg', caption: 'Isometric — show floor' },
 ];
 
 // ---------- Drawings (orthographic views) ----------
@@ -152,16 +160,6 @@ function renderTimeline() {
   }).join('');
 }
 
-function renderElements() {
-  const el = document.getElementById('elements');
-  el.innerHTML = ELEMENTS.map(e => `
-    <div class="el-card">
-      <div class="el-icon">${e.icon}</div>
-      <div class="el-name">${e.name}</div>
-      <div class="el-desc">${e.desc}</div>
-    </div>`).join('');
-}
-
 function renderGallery(items, containerId) {
   const el = document.getElementById(containerId);
   el.innerHTML = items.map(it => `
@@ -192,7 +190,6 @@ function renderNotes() {
 renderOverview();
 renderQuote();
 renderTimeline();
-renderElements();
 renderGallery(RENDERS, 'renders');
 renderGallery(DRAWINGS, 'drawings');
 renderNotes();
