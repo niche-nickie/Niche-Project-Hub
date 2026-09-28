@@ -70,6 +70,24 @@ const DRAWINGS = [
   { src: 'assets/cae-dwg-4.jpg', caption: 'Left view / Right view' },
 ];
 
+// ---------- Quote (SO-21528) ----------
+const QUOTE = {
+  so: 'SO-21528',
+  date: 'Sep 24, 2026',
+  client: 'E2i Concepts Sdn Bhd',
+  total: 345000,
+  items: [
+    { name: 'Custom Structure (40×70)', amount: 192214.70 },
+    { name: 'Furniture / Electronics', amount: 28619.00 },
+    { name: 'LED Screen', amount: 18200.00 },
+    { name: 'Graphics', amount: 16031.05 },
+    { name: 'Flooring Rental', amount: 13860.00 },
+    { name: 'I&D Labor', amount: 40500.00 },
+    { name: 'Transportation', amount: 10030.58 },
+    { name: 'Administrative Expense', amount: 25544.68 },
+  ],
+};
+
 // ---------- Notes ----------
 const NOTES = [
   'Agency provides design. AMG scope: production, graphics, logistics, and I&amp;D only.',
@@ -92,6 +110,29 @@ function renderOverview() {
       <div class="ov-label">${o.label}</div>
       <div class="ov-value">${o.value}</div>
     </div>`).join('');
+}
+
+function fmtMoney(n) {
+  return n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+}
+
+function renderQuote() {
+  const el = document.getElementById('quote');
+  const rows = QUOTE.items.map(it => `
+    <div class="quote-row">
+      <span class="quote-name">${it.name}</span>
+      <span class="quote-amt">${fmtMoney(it.amount)}</span>
+    </div>`).join('');
+  el.innerHTML = `
+    <div class="quote-head">
+      <span class="quote-so">${QUOTE.so}</span>
+      <span class="quote-date">${QUOTE.date} · ${QUOTE.client}</span>
+    </div>
+    ${rows}
+    <div class="quote-total">
+      <span>Total</span>
+      <span>${fmtMoney(QUOTE.total)}</span>
+    </div>`;
 }
 
 function renderTimeline() {
@@ -149,6 +190,7 @@ function renderNotes() {
 }
 
 renderOverview();
+renderQuote();
 renderTimeline();
 renderElements();
 renderGallery(RENDERS, 'renders');

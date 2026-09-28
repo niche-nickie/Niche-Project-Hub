@@ -136,6 +136,12 @@ body {
   border: 1px solid rgba(176, 154, 106, 0.35);
 }
 
+.status-quoted {
+  background: rgba(123, 166, 217, 0.14);
+  color: #7BA6D9;
+  border: 1px solid rgba(123, 166, 217, 0.35);
+}
+
 .card-arrow {
   font-size: 22px;
   color: var(--brass);

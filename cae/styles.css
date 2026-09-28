@@ -89,6 +89,12 @@ body {
   border: 1px solid rgba(176, 154, 106, 0.35);
 }
 
+.status-quoted {
+  background: rgba(123, 166, 217, 0.14);
+  color: #7BA6D9;
+  border: 1px solid rgba(123, 166, 217, 0.35);
+}
+
 .hero-sub {
   margin-top: 8px;
   font-size: 15px;
@@ -253,6 +259,80 @@ body {
 }
 
 .footer-dot { color: var(--brass); }
+
+/* Quote */
+.quote {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.quote-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.quote-so {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--brass-soft);
+}
+
+.quote-date {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-dim);
+}
+
+.quote-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 20px;
+  border-bottom: 1px solid rgba(176, 154, 106, 0.08);
+}
+
+.quote-name {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.quote-amt {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--warm-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.quote-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--navy-2);
+}
+
+.quote-total span:first-child {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass-soft);
+}
+
+.quote-total span:last-child {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  color: var(--ivory);
+  font-variant-numeric: tabular-nums;
+}
 
 /* Gallery (renders / drawings) */
 .gallery {
