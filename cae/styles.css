@@ -51,9 +51,9 @@ body {
 }
 
 .container {
-  max-width: 980px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 48px 48px 40px;
+  padding: 48px 56px 40px;
 }
 
 /* Hero */
@@ -431,7 +431,7 @@ body {
 /* Gallery (renders / drawings) */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 18px;
 }
 
