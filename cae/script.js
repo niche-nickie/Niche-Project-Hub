@@ -123,6 +123,14 @@ const DEFAULT_CHECKLIST_RAW = [
   { cat: 'Flooring', items: [
     { name: 'Carpet (light gray)', qty: '2800 sf' },
   ]},
+  { cat: 'From Client', items: [
+    { name: 'Round Carpet (Amazon purchase)', qty: '×3' },
+    { name: 'Steel Rack (Amazon purchase)', qty: '×3' },
+    { name: 'Four-Seater Sofa (Amazon purchase)', qty: '×2' },
+    { name: 'Lighting Logo (Delivered from China)', qty: '×8' },
+    { name: 'Hanging Cage Lighted Acrylic (Delivered from China)', qty: '×1' },
+  ]},
+  { cat: 'Existing from Storage', items: [] },
 ];
 
 function seedIds(list) {
