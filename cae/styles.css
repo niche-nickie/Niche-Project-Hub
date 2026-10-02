@@ -548,6 +548,26 @@ body {
   opacity: 0.45;
 }
 
+.todo-status-select {
+  width: 130px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--brass-soft);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.todo-status-select:hover,
+.todo-status-select:focus {
+  border-color: var(--brass);
+}
+
 /* Edit Mode */
 .check-head-right {
   display: flex;
