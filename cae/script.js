@@ -261,7 +261,7 @@ const DEFAULT_TODO_RAW = [
   'Update Drawings section on Project Hub',
 ];
 
-let TODO = DEFAULT_TODO_RAW.map((t, i) => ({ id: 'todo-' + i, text: t, checked: false }));
+let TODO = DEFAULT_TODO_RAW.map((t, i) => ({ id: 'todo-' + i, text: t, checked: false, status: '', completeDate: '' }));
 let TODO_EDIT = false;
 
 function persistTodo() {
@@ -276,7 +276,7 @@ function loadTodo(cb) {
   if (!FB_DB) { cb(); return; }
   FB_DB.collection(TODO_DOC).doc(TODO_ID).get().then(snap => {
     if (snap.exists && snap.data().items && snap.data().items.length) {
-      TODO = snap.data().items;
+      TODO = snap.data().items.map(it => ({ status: '', completeDate: '', ...it }));
     } else {
       persistTodo();
     }
@@ -306,13 +306,22 @@ function toggleTodoEdit() {
 }
 
 function toggleTodoCheck(itemId, checked) {
-  TODO.forEach(it => { if (it.id === itemId) it.checked = checked; });
+  TODO.forEach(it => {
+    if (it.id === itemId) {
+      it.checked = checked;
+      if (checked && !it.completeDate) {
+        it.completeDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      } else if (!checked) {
+        it.completeDate = '';
+      }
+    }
+  });
   renderTodo();
   persistTodo();
 }
 
 function addTodo() {
-  TODO.push({ id: newId('todo'), text: 'New to-do', checked: false });
+  TODO.push({ id: newId('todo'), text: 'New to-do', checked: false, status: '', completeDate: '' });
   renderTodo();
   persistTodo();
 }
@@ -324,8 +333,8 @@ function removeTodo(itemId) {
   persistTodo();
 }
 
-function editTodoField(id, el) {
-  TODO.forEach(it => { if (it.id === id) it.text = el.textContent.trim(); });
+function editTodoField(id, field, el) {
+  TODO.forEach(it => { if (it.id === id) it[field] = el.textContent.trim(); });
   persistTodo();
 }
 
@@ -338,16 +347,25 @@ function updateTodoProgress() {
 
 function renderTodo() {
   const el = document.getElementById('todo');
+  const edit = TODO_EDIT;
   el.innerHTML = `
     <div class="group-card">
+      <div class="todo-head">
+        <span class="todo-head-task">Task</span>
+        <span class="todo-head-status">Status</span>
+        <span class="todo-head-date">Complete Date</span>
+        ${edit ? '<span class="todo-head-x"></span>' : ''}
+      </div>
       ${TODO.map(it => `
         <div class="check-row ${it.checked ? 'on' : ''}" data-item-id="${it.id}">
           <input type="checkbox" ${it.checked ? 'checked' : ''}>
           <span class="check-box"></span>
-          <span class="check-name"${TODO_EDIT ? ` contenteditable="true" data-id="${it.id}" onclick="event.stopPropagation()"` : ''}>${escapeHtml(it.text)}</span>
-          ${TODO_EDIT ? `<button class="edit-x" onclick="event.stopPropagation();removeTodo('${it.id}')" title="Remove">&times;</button>` : ''}
+          <span class="check-name"${edit ? ` contenteditable="true" data-id="${it.id}" data-field="text" onclick="event.stopPropagation()"` : ''}>${escapeHtml(it.text)}</span>
+          <span class="todo-status"${edit ? ` contenteditable="true" data-id="${it.id}" data-field="status" data-ph="Status" onclick="event.stopPropagation()"` : ''}>${escapeHtml(it.status || '')}</span>
+          <span class="todo-date"${edit ? ` contenteditable="true" data-id="${it.id}" data-field="completeDate" data-ph="—" onclick="event.stopPropagation()"` : ''}>${escapeHtml(it.completeDate || '')}</span>
+          ${edit ? `<button class="edit-x" onclick="event.stopPropagation();removeTodo('${it.id}')" title="Remove">&times;</button>` : ''}
         </div>`).join('')}
-      ${TODO_EDIT ? `<button class="edit-add" onclick="addTodo()">+ Add to-do</button>` : ''}
+      ${edit ? `<button class="edit-add" onclick="addTodo()">+ Add to-do</button>` : ''}
     </div>`;
 
   el.querySelectorAll('input[type="checkbox"]').forEach(cb => {
@@ -359,16 +377,16 @@ function renderTodo() {
 
   el.querySelectorAll('.check-row').forEach(row => {
     row.addEventListener('click', (e) => {
-      if (TODO_EDIT && (e.target.isContentEditable || e.target.closest('.edit-x'))) return;
+      if (edit && (e.target.isContentEditable || e.target.closest('.edit-x'))) return;
       const cb = row.querySelector('input[type="checkbox"]');
       cb.checked = !cb.checked;
       cb.dispatchEvent(new Event('change'));
     });
   });
 
-  if (TODO_EDIT) {
+  if (edit) {
     el.querySelectorAll('[contenteditable]').forEach(ed => {
-      ed.addEventListener('blur', () => editTodoField(ed.dataset.id, ed));
+      ed.addEventListener('blur', () => editTodoField(ed.dataset.id, ed.dataset.field, ed));
     });
   }
 
