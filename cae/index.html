@@ -51,6 +51,18 @@
       <div class="quote" id="quote"></div>
     </section>
 
+    <!-- To-do List -->
+    <section class="section-block">
+      <div class="section-head-row">
+        <h2 class="section-title">To-do</h2>
+        <div class="check-head-right">
+          <span class="check-progress" id="todo-progress">0 / 0</span>
+          <button id="btn-todo-edit" class="edit-toggle-btn" onclick="toggleTodoEdit()">✎ Edit</button>
+        </div>
+      </div>
+      <div id="todo"></div>
+    </section>
+
     <!-- Loose Items Checklist -->
     <section class="section-block">
       <div class="section-head-row">
@@ -84,6 +96,6 @@
 
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>

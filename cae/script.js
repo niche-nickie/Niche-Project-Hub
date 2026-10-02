@@ -251,6 +251,130 @@ function editAttrs(kind, id, field) {
   return ` contenteditable="true" data-kind="${kind}" data-id="${id}" data-field="${field}" onclick="event.stopPropagation()"`;
 }
 
+// ---------- To-do List (Firestore sync + editable) ----------
+const TODO_DOC = 'cae_todo';
+const TODO_ID = 'todo';
+
+const DEFAULT_TODO_RAW = [
+  'Confirm LED wall width with designer (5M → 6M)',
+  'Update PD drawings after LED fix',
+  'Update Drawings section on Project Hub',
+];
+
+let TODO = DEFAULT_TODO_RAW.map((t, i) => ({ id: 'todo-' + i, text: t, checked: false }));
+let TODO_EDIT = false;
+
+function persistTodo() {
+  if (!FB_DB) return;
+  FB_DB.collection(TODO_DOC).doc(TODO_ID).set({
+    items: TODO,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  }).catch(e => console.warn('todo persist failed:', e));
+}
+
+function loadTodo(cb) {
+  if (!FB_DB) { cb(); return; }
+  FB_DB.collection(TODO_DOC).doc(TODO_ID).get().then(snap => {
+    if (snap.exists && snap.data().items && snap.data().items.length) {
+      TODO = snap.data().items;
+    } else {
+      persistTodo();
+    }
+    cb();
+  }).catch(() => cb());
+}
+
+function watchTodo() {
+  if (!FB_DB) return;
+  FB_DB.collection(TODO_DOC).doc(TODO_ID).onSnapshot(snap => {
+    if (!snap.exists) return;
+    const remote = snap.data().items || [];
+    if (JSON.stringify(remote) === JSON.stringify(TODO)) return;
+    TODO = remote;
+    renderTodo();
+  });
+}
+
+function toggleTodoEdit() {
+  TODO_EDIT = !TODO_EDIT;
+  const btn = document.getElementById('btn-todo-edit');
+  if (btn) {
+    btn.textContent = TODO_EDIT ? '✓ Done Editing' : '✎ Edit';
+    btn.classList.toggle('editing-active', TODO_EDIT);
+  }
+  renderTodo();
+}
+
+function toggleTodoCheck(itemId, checked) {
+  TODO.forEach(it => { if (it.id === itemId) it.checked = checked; });
+  renderTodo();
+  persistTodo();
+}
+
+function addTodo() {
+  TODO.push({ id: newId('todo'), text: 'New to-do', checked: false });
+  renderTodo();
+  persistTodo();
+}
+
+function removeTodo(itemId) {
+  if (!confirm('Remove this to-do?')) return;
+  TODO = TODO.filter(it => it.id !== itemId);
+  renderTodo();
+  persistTodo();
+}
+
+function editTodoField(id, el) {
+  TODO.forEach(it => { if (it.id === id) it.text = el.textContent.trim(); });
+  persistTodo();
+}
+
+function updateTodoProgress() {
+  const total = TODO.length;
+  const done = TODO.filter(t => t.checked).length;
+  const prog = document.getElementById('todo-progress');
+  if (prog) prog.textContent = `${done} / ${total}`;
+}
+
+function renderTodo() {
+  const el = document.getElementById('todo');
+  el.innerHTML = `
+    <div class="group-card">
+      ${TODO.map(it => `
+        <div class="check-row ${it.checked ? 'on' : ''}" data-item-id="${it.id}">
+          <input type="checkbox" ${it.checked ? 'checked' : ''}>
+          <span class="check-box"></span>
+          <span class="check-name"${TODO_EDIT ? ` contenteditable="true" data-id="${it.id}" onclick="event.stopPropagation()"` : ''}>${escapeHtml(it.text)}</span>
+          ${TODO_EDIT ? `<button class="edit-x" onclick="event.stopPropagation();removeTodo('${it.id}')" title="Remove">&times;</button>` : ''}
+        </div>`).join('')}
+      ${TODO_EDIT ? `<button class="edit-add" onclick="addTodo()">+ Add to-do</button>` : ''}
+    </div>`;
+
+  el.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const itemId = cb.closest('.check-row').dataset.itemId;
+      toggleTodoCheck(itemId, cb.checked);
+    });
+  });
+
+  el.querySelectorAll('.check-row').forEach(row => {
+    row.addEventListener('click', (e) => {
+      if (TODO_EDIT && (e.target.isContentEditable || e.target.closest('.edit-x'))) return;
+      const cb = row.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+      cb.dispatchEvent(new Event('change'));
+    });
+  });
+
+  if (TODO_EDIT) {
+    el.querySelectorAll('[contenteditable]').forEach(ed => {
+      ed.addEventListener('blur', () => editTodoField(ed.dataset.id, ed));
+    });
+  }
+
+  updateTodoProgress();
+}
+
 // ---------- Render helpers ----------
 function fmtDate(iso) {
   const d = new Date(iso + 'T00:00:00');
@@ -456,6 +580,7 @@ function renderAll() {
   renderGallery(RENDERS, 'renders');
   renderGallery(DRAWINGS, 'drawings');
   renderQuote();
+  renderTodo();
   renderChecklist();
   renderNotes();
 }
@@ -464,5 +589,8 @@ function renderAll() {
 initFirebase();
 loadChecklist(() => {
   watchChecklist();
-  renderAll();
+  loadTodo(() => {
+    watchTodo();
+    renderAll();
+  });
 });
