@@ -261,8 +261,6 @@ const DEFAULT_TODO_RAW = [
   'Update Drawings section on Project Hub',
 ];
 
-const TODO_STATUS_OPTIONS = ['Pending', 'In Progress', 'Blocked', 'Done'];
-
 let TODO = DEFAULT_TODO_RAW.map((t, i) => ({ id: 'todo-' + i, text: t, checked: false, status: '', completeDate: '' }));
 let TODO_EDIT = false;
 
@@ -311,21 +309,14 @@ function toggleTodoCheck(itemId, checked) {
   TODO.forEach(it => {
     if (it.id === itemId) {
       it.checked = checked;
-      if (checked) {
-        it.status = 'Done';
+      if (checked && !it.completeDate) {
         it.completeDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      } else {
-        it.status = 'Pending';
+      } else if (!checked) {
         it.completeDate = '';
       }
     }
   });
   renderTodo();
-  persistTodo();
-}
-
-function setTodoStatus(itemId, val) {
-  TODO.forEach(it => { if (it.id === itemId) it.status = val; });
   persistTodo();
 }
 
@@ -370,12 +361,7 @@ function renderTodo() {
           <input type="checkbox" ${it.checked ? 'checked' : ''}>
           <span class="check-box"></span>
           <span class="check-name"${edit ? ` contenteditable="true" data-id="${it.id}" data-field="text" onclick="event.stopPropagation()"` : ''}>${escapeHtml(it.text)}</span>
-          <span class="todo-status">
-            ${edit ? `<select class="todo-status-select" data-id="${it.id}" onchange="setTodoStatus('${it.id}', this.value)" onclick="event.stopPropagation()">
-              <option value="" ${!it.status ? 'selected' : ''}>—</option>
-              ${TODO_STATUS_OPTIONS.map(s => `<option value="${s}" ${it.status === s ? 'selected' : ''}>${s}</option>`).join('')}
-            </select>` : escapeHtml(it.status || '')}
-          </span>
+          <span class="todo-status"${edit ? ` contenteditable="true" data-id="${it.id}" data-field="status" data-ph="Status" onclick="event.stopPropagation()"` : ''}>${escapeHtml(it.status || '')}</span>
           <span class="todo-date"${edit ? ` contenteditable="true" data-id="${it.id}" data-field="completeDate" data-ph="—" onclick="event.stopPropagation()"` : ''}>${escapeHtml(it.completeDate || '')}</span>
           ${edit ? `<button class="edit-x" onclick="event.stopPropagation();removeTodo('${it.id}')" title="Remove">&times;</button>` : ''}
         </div>`).join('')}
